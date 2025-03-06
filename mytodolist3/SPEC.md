@@ -37,8 +37,41 @@ classDiagram
 
 ## Technical Stack
 - Frontend: HTML, CSS, JavaScript
-- Storage: Local Storage
+- Backend: Node.js with Express
+- Storage: 
+  - Frontend: Local Storage (temporary)
+  - Backend: JSON file / SQLite
 - Build Tool: None (keep it simple)
+
+## API Endpoints
+
+### Tasks API
+| Method | Endpoint      | Description                     | Request Body                    | Response                        |
+|--------|---------------|--------------------------------|---------------------------------|---------------------------------|
+| GET    | /tasks        | Retrieve all tasks             | None                           | Array of task objects           |
+| POST   | /task         | Create a new task              | `{ text: string }`             | Created task object             |
+| PUT    | /task/:id     | Update a task                  | `{ text?: string, completed?: boolean }` | Updated task object    |
+| DELETE | /task/:id     | Delete a task                  | None                           | Success message                 |
+
+### API Response Formats
+
+#### Task Object
+```json
+{
+    "id": "unique-id",
+    "text": "Task description",
+    "completed": false,
+    "createdAt": "2024-03-06T15:00:00.000Z"
+}
+```
+
+#### Error Response
+```json
+{
+    "error": "Error message",
+    "status": 400
+}
+```
 
 ## User Stories
 
@@ -57,9 +90,16 @@ classDiagram
 ## File Structure
 ```
 mytodolist3/
-├── index.html
-├── styles.css
-└── app.js
+├── frontend/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+└── backend/
+    ├── server.js
+    ├── routes/
+    │   └── tasks.js
+    └── data/
+        └── tasks.json
 ```
 
 ## Implementation Details
@@ -87,11 +127,17 @@ mytodolist3/
 ## Error Handling
 1. Empty todo items not allowed
 2. Duplicate todos allowed
-3. Graceful handling of localStorage errors
+3. Graceful handling of localStorage and API errors
 4. Max length for todo text (200 characters)
+5. API-specific error handling:
+   - 400: Bad Request (invalid input)
+   - 404: Task not found
+   - 500: Server error
 
 ## Performance Considerations
 1. Efficient DOM updates
 2. Minimal re-renders
-3. Debounced save operations
-4. Optimized localStorage interactions
+3. Debounced API calls
+4. API response caching
+5. Optimized database queries
+6. Rate limiting for API endpoints
