@@ -40,18 +40,6 @@ classDiagram
 - Storage: Local Storage
 - Build Tool: None (keep it simple)
 
-## Component Structure
-
-```mermaid
-componentDiagram
-    component TodoApp {
-        [TodoInput]
-        [TodoList]
-        [TodoItem]
-        [FilterButtons]
-    }
-```
-
 ## User Stories
 
 ### Must Have
